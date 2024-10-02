@@ -1,1 +1,1 @@
-# game-of-life-archive
+Тема №2. Игра "Жизнь"
