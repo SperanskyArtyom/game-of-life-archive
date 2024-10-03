@@ -1,7 +1,5 @@
 #include <lifelib/gui.h>
 
-#include <ctime>
-
 using namespace sf;
 
 #define MAX_DELAY 1.0
@@ -49,7 +47,7 @@ void GUI::run()
 
 void GUI::check_events()
 {
-    Event event;
+    Event event{};
     while (window.pollEvent(event)) {
         static bool lock_click;
         if ((event.type == Event::Closed)
@@ -85,8 +83,8 @@ void GUI::set_game_field(unsigned x, unsigned y)
             cells[i][j].setOutlineColor(Color::Black);
             cells[i][j].setOutlineThickness(1);
             cells[i][j].setPosition(
-                    field_margin + cell_width * j,
-                    field_margin + cell_width * i);
+                    field_margin + cell_width * (float)j,
+                    field_margin + cell_width * (float)i);
         }
     }
 }
@@ -106,19 +104,19 @@ void GUI::set_buttons()
 
     set_button(
             pause_button,
-            win_size_x - (button_margin + button_width),
+            (float)win_size_x - (button_margin + button_width),
             button_margin);
     set_button(
             clear_button,
-            win_size_x - (button_margin + button_width),
+            (float)win_size_x - (button_margin + button_width),
             button_margin + dy);
     set_button(
             dec_speed_button,
-            win_size_x - (button_margin + button_width * 3 / 4 + 10),
+            (float)win_size_x - (button_margin + button_width * 3 / 4 + 10),
             button_margin + 2 * dy);
     set_button(
             inc_speed_button,
-            win_size_x - (button_margin + button_width / 2 - 10),
+            (float)win_size_x - (button_margin + button_width / 2 - 10),
             button_margin + 2 * dy);
 }
 
@@ -164,10 +162,10 @@ void GUI::draw_buttons()
 }
 
 void GUI::draw_button(
-        RectangleShape button,
+        const RectangleShape& button,
         float text_coord_x,
         float text_coord_y,
-        std::string button_str)
+        const std::string& button_str)
 {
     button_text.setPosition(text_coord_x, text_coord_y);
     button_text.setString(button_str);
@@ -222,14 +220,14 @@ void GUI::update_game_status()
         game_is_running = !game_is_running;
 }
 
-bool GUI::rectangle_is_pressed(RectangleShape button)
+bool GUI::rectangle_is_pressed(const RectangleShape& button)
 {
     return (button.getGlobalBounds().contains(
-                    Mouse::getPosition(window).x, Mouse::getPosition(window).y)
+            (float)Mouse::getPosition(window).x, (float)Mouse::getPosition(window).y)
             && Mouse::isButtonPressed(Mouse::Button::Left));
 }
 
-int GUI::get_speed()
+int GUI::get_speed() const
 {
     double percentage = (1 - delay / MAX_DELAY) * 100;
     return (int)percentage + 10;

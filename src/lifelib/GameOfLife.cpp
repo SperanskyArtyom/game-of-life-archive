@@ -9,10 +9,6 @@ GameOfLife::GameOfLife(unsigned x, unsigned y) : size_x{x}, size_y{y}
 GameOfLife::GameOfLife() : GameOfLife::GameOfLife(10, 10)
 {
 }
-GameOfLife::GameOfLife(const GameOfLife& model)
-    : GameOfLife::GameOfLife(model.size_x, model.size_y)
-{
-}
 
 GameOfLife::~GameOfLife()
 {
@@ -26,28 +22,16 @@ void GameOfLife::move_to_next_generation()
     field = next_generation;
 }
 
-void GameOfLife::print()
-{
-    for (unsigned i = 0; i < size_y; i++) {
-        for (unsigned j = 0; j < size_x; j++)
-            if (field[i][j])
-                std::cout << '*';
-            else
-                std::cout << 'O';
-        std::cout << std::endl;
-    }
-}
-
 void GameOfLife::change_cell_status(unsigned x, unsigned y)
 {
     field[y][x] = !field[y][x];
 }
 
-unsigned GameOfLife::get_size_x()
+unsigned GameOfLife::get_size_x() const
 {
     return size_x;
 }
-unsigned GameOfLife::get_size_y()
+unsigned GameOfLife::get_size_y() const
 {
     return size_y;
 }
@@ -56,7 +40,7 @@ bool GameOfLife::get_cell_status(unsigned x, unsigned y)
     return field[y][x];
 }
 
-bool** GameOfLife::create_field()
+bool** GameOfLife::create_field() const
 {
     bool** clear_field = new bool*[size_y];
     for (unsigned i = 0; i < size_y; i++) {
@@ -77,11 +61,11 @@ void GameOfLife::delete_field()
 bool GameOfLife::is_alive(int x, int y)
 {
     if (x < 0)
-        x = size_x - 1;
+        x = (int)size_x - 1;
     else if (x == (int)size_x)
         x = 0;
     if (y < 0)
-        y = size_y - 1;
+        y = (int)size_y - 1;
     else if (y == (int)size_y)
         y = 0;
     return field[y][x];
@@ -92,7 +76,7 @@ bool GameOfLife::will_be_alive(unsigned x, unsigned y)
     int alive_neighbors = 0;
     for (int i = -1; i < 2; i++)
         for (int j = -1; j < 2; j++)
-            alive_neighbors += is_alive(x + j, y + i);
+            alive_neighbors += is_alive((int)x + j, (int)y + i);
     if (field[y][x]) {
         if ((alive_neighbors - 1) == 2 || (alive_neighbors - 1) == 3)
             return true;

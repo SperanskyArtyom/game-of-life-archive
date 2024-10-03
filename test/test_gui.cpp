@@ -38,7 +38,7 @@ CTEST(gui_game_field, position)
     GUI test_game;
     test_game.set_game_field();
 
-    // Wnen
+    // When
     const bool result
             = test_game.field_bound.getPosition() == sf::Vector2f{40, 40};
 
@@ -52,7 +52,7 @@ CTEST(gui_cells, positon)
     GUI test_game;
     test_game.set_game_field();
 
-    // Wnen
+    // When
     const bool result
             = test_game.cells[0][0].getPosition() == sf::Vector2f{40, 40};
 

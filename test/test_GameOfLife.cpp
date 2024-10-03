@@ -189,7 +189,7 @@ CTEST(correct_next_generation, line)
 
     // When
     bool result = true;
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 7; i++) {
         for (int j = 0; j < 7; j++) {
             if (j == 1 && i < 5 && i > 1) {
                 if (!test_field.get_cell_status(j, i))
